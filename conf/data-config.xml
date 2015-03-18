@@ -1,0 +1,20 @@
+# define data source
+<dataConfig>
+<dataSource type="JdbcDataSource" 
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/mldata" 
+            user="root" 
+            password=""/>
+<document>
+  <entity name="docs"  
+    pk="Id"
+    query="select id, topic, text from docs"
+    deltaImportQuery="SELECT id, topic, text from docs WHERE id='${dih.delta.Id}'"
+    deltaQuery="SELECT id FROM docs WHERE updated_at > '${dih.last_index_time}'"
+    >
+     <field column="id" name="id"/>
+     <field column="topic" name="topic"/> 
+     <field column="text" name="text"/>       
+  </entity>
+</document>
+</dataConfig>
